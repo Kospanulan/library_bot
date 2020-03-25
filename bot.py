@@ -26,13 +26,13 @@ class Spreadsheet():
 		row=0
 		foundbook=''
 		"""col_values(1) вместо 1 нужно написать номер столбца где будут храниться названия книг"""
-		for bookname in self.sheet.col_values(1):  
+		for bookname in self.sheet.col_values(2):  
 			row=row+1
 			if data.lower() in bookname.lower():
 				cnt=cnt+1
 				# "self.sheet.cell(row,2).value" вот таких строк нужно добавить сколько нужно
 				# и вместо 2 нужно писать номер столбцов которые должен будет видеть юзер
-				foundbook=foundbook+'\n'+bookname+' '+self.sheet.cell(row,2).value + ';'
+				foundbook=foundbook+'\n'+bookname+' '+self.sheet.cell(row,1).value + ';'
 		if cnt==1:
 		    return "Найдена только одна книга: "+foundbook
 		elif cnt!=0:
@@ -44,11 +44,11 @@ class Spreadsheet():
 		cnt=0
 		row=0
 		foundbook=''
-		for auth_fullname in self.sheet.col_values(2):
+		for auth_fullname in self.sheet.col_values(1):
 			row=row+1
 			if data.lower() in auth_fullname.lower():
 				cnt=cnt+1
-				foundbook=foundbook+'\n'+self.sheet.cell(row,1).value+' '+auth_fullname + ';'
+				foundbook=foundbook+'\n'+self.sheet.cell(row,2).value+' '+auth_fullname + ';'
 		if cnt==1:
 		    return "Найдена только одна книга: "+foundbook
 		elif cnt!=0:
@@ -139,7 +139,7 @@ if "HEROKU" in list(os.environ.keys()):
     @server.route("/")
     def webhook():
         bot.remove_webhook()
-        bot.set_webhook(url="https://lib-bot-v1-test.herokuapp.com/") # этот url нужно заменить на url вашего Хероку приложения
+        bot.set_webhook(url="https://konayevalibrarybot.herokuapp.com/") # этот url нужно заменить на url вашего Хероку приложения
         return "?", 200
     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
 else:
